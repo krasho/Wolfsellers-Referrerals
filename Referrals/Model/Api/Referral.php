@@ -9,7 +9,7 @@ class Referral implements ReferralInterface
     private $quote;
     protected $response = ['success' => false];
     protected $request;
-    
+
 
     public function __construct(
         ReferralsFactory $referralFactory,
@@ -39,6 +39,27 @@ class Referral implements ReferralInterface
         }
         return $response;
     }
+
+    public function edit($id)
+    {
+        $data = $this->request->getBodyParams();
+        $factory = $this->referralFactory->create()->load($id);
+        try {
+            $factory->setFirstname($data['firstName']);
+            $factory->setLastname($data['lastName']);
+            $factory->setEmail($data['email']);
+            $factory->setPhone($data['phone']);
+            $factory->setStatus($data['status']);
+            $factory->setCustomerId($data['customer_id']);
+            $factory->save();
+
+            $response = ['success' => true, 'message' => $data];
+        } catch (\Exception $e) {
+            $response = ['success' => false, 'message' => $e->getMessage()];
+        }
+        return $response;
+    }
+
 
     /** * @return string */
     public function getData()
@@ -101,24 +122,5 @@ class Referral implements ReferralInterface
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }
-    }
-
-    /** * GET for Post api * @param string $title * @return string */
-    public function getEdit($title)
-    {
-        $edit = file_get_contents("php://input");
-        $data = json_decode($edit, true);
-        $insertData = $this->referralFactory->create();
-        $id = $data['id'];
-        if ($id) {
-            try {
-                $insertData->load($id);
-                $insertData->setTitle($data['title'])->save();
-                $response = ['success' => true, 'message' => $data];
-            } catch (\Exception $e) {
-                $response = ['success' => false, 'message' => $e->getMessage()];
-            }
-        }
-        return $response;
     }
 }
