@@ -19,8 +19,8 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route method="GET" url="/V1/custom/getbyid/">
-        <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="getById"/>
+    <route method="GET" url="/V1/referral/search/">
+        <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="search"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>

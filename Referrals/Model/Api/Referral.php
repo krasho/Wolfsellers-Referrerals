@@ -8,7 +8,8 @@ class Referral implements ReferralInterface
     private $referralFactory;
     private $quote;
     protected $response = ['success' => false];
-    protected  $request;
+    protected $request;
+    
 
     public function __construct(
         ReferralsFactory $referralFactory,
@@ -65,14 +66,38 @@ class Referral implements ReferralInterface
         return "false";
     }
 
-    /** * @param int $id * @return string */
-    public function getById($id)
+    public function search()
     {
+        $data = $this->request->getParams();
         try {
-            if ($id) {
-                $data = $this->referralFactory->create()->load($id)->getData();
-                return ['success' => true, 'message' => json_encode($data)];
+            $referralCollection = $this->referralFactory->create()->getCollection();
+            if (!empty($data['firstname'])) {
+                $referralCollection->addFieldToFilter('firstname', ['eq' => $data['firstname']]);
             }
+
+            if (!empty($data['lastname'])) {
+                $referralCollection->addFieldToFilter('lastname', ['eq' => $data['lastname']]);
+            }
+
+            if (!empty($data['email'])) {
+                $referralCollection->addFieldToFilter('email', ['eq' => $data['email']]);
+            }
+
+            if (!empty($data['phone'])) {
+                $referralCollection->addFieldToFilter('phone', ['eq' => $data['phone']]);
+            }
+
+            if (!empty($data['status'])) {
+                $referralCollection->addFieldToFilter('status', ['eq' => $data['status']]);
+            }
+
+            if (!empty($data['customer_id'])) {
+                $referralCollection->addFieldToFilter('customer_id', ['eq' => $data['customer_id']]);
+            }
+
+
+            $data = $referralCollection->getData();
+            return ['success' => true, 'message' => json_encode($data)];
         } catch (\Exception $e) {
             return ['success' => false, 'message' => $e->getMessage()];
         }

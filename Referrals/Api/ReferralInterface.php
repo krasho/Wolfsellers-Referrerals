@@ -23,10 +23,9 @@ interface ReferralInterface
     public function remove($id);
 
     /**
-     * @param int $id
      * @return string
      */
-    public function getById($id);
+    public function search();
 
     /**
      * GET for Post api
