@@ -25,6 +25,13 @@ class Referral implements ReferralInterface
         $data = $this->request->getBodyParams();
         $factory = $this->referralFactory->create();
         try {
+            $existEmail = $this->existEmail($data['email']);
+
+            if ($existEmail === true) {
+                return ['success' => false, 'message' => "Email already exists"];
+            }
+
+
             $factory->setFirstname($data['firstName']);
             $factory->setLastname($data['lastName']);
             $factory->setEmail($data['email']);
@@ -40,11 +47,36 @@ class Referral implements ReferralInterface
         return $response;
     }
 
+    private function existEmail($email, $customerId=null): bool
+    {
+        $referralCollection = $this->referralFactory->create()->getCollection();
+        $referralCollection->addFieldToFilter('email', ['eq' => $email]);
+
+        if(!empty($customerId)) {
+            $referralCollection->addFieldToFilter('id', ['neq' => $customerId]);
+        }
+
+        $data = $referralCollection->getData();
+
+        if (!empty($data)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function update($id)
     {
         $data = $this->request->getBodyParams();
         $factory = $this->referralFactory->create()->load($id);
         try {
+
+            $existEmail = $this->existEmail($data['email'], $id);
+
+            if ($existEmail === true) {
+                return ['success' => false, 'message' => "Email already exists"];
+            }
+
             $factory->setFirstname($data['firstName']);
             $factory->setLastname($data['lastName']);
             $factory->setEmail($data['email']);
