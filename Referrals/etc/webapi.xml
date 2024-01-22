@@ -4,31 +4,31 @@
     <route method="POST" url="/V1/referral/create/">
         <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="create"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Backend::admin"/>
         </resources>
     </route>
     <route method="GET" url="/V1/referral/">
         <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="getData"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Backend::admin"/>
         </resources>
     </route>
     <route method="DELETE" url="/V1/referral/delete">
         <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="remove"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Backend::admin"/>
         </resources>
     </route>
     <route method="GET" url="/V1/referral/search/">
         <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="search"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Backend::admin"/>
         </resources>
     </route>
     <route method="PUT" url="/V1/referral/update/">
         <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="update"/>
         <resources>
-            <resource ref="anonymous"/>
+            <resource ref="Magento_Backend::admin"/>
         </resources>
     </route>
 </routes>
