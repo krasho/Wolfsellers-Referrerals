@@ -1,0 +1,178 @@
+<div class="referrals-container">
+
+    <div class="referrals-container-create" style="display: none">
+        <form id="form-referral" action="<?= $block->getUrl('referrals/customer/save') ?>" method="post">
+            <input type="hidden" name="_token" value="mDOzpO1b7NfiUo48spN3ykOULLhynH0Hw9RoUw3h" autocomplete="off">
+            <div class="mb-4">
+                <label class="block font-medium text-xl text-gray-700 dark:text-gray-300 !m-0" for="name"><?= __("Firstname"); ?></label>
+                <input id="first-name"
+                       type="text" name="firstname"  required="required" autofocus="autofocus" autocomplete="first-name"
+                       data-validate='{"required":true}'>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium text-xl text-gray-700 dark:text-gray-300 !m-0" for="name"> Last Name </label>
+                <input id="last-name" type="text" name="lastname"  required="required" autofocus="autofocus" autocomplete="last-name"
+                       data-validate='{"required":true}'>
+            </div>
+
+            <div class="mb-4">
+                <label> Email </label>
+                <input id="email" type="email" name="email"  required="required" autofocus="autofocus" autocomplete="email"
+                       data-validate='{"required":true, }'>
+            </div>
+
+            <div class="mb-4">
+                <label> Phone </label>
+                <input id="phone_number" type="tel" name="phone" required="required" autofocus="autofocus" autocomplete="phone"
+                       data-validate='{"required":true, "email": true}'>
+            </div>
+
+            <div><br>
+                <span>
+                  <button type="submit"> Save </button>
+                </span>
+                <span class="mt-3 flex w-full shadow-sm sm:mt-0 sm:w-auto">
+                  <button type="button" id="referral-create-cancel"> Cancel </button>
+                </span>
+            </div>
+        </form>
+        <br><br>
+    </div>
+
+
+    <div class="referrals-container-update" style="display: none">
+        <form id="form-referral-update" action="<?= $block->getUrl('referrals/customer/update') ?>" method="post">
+            <input type="hidden" name="_token" value="mDOzpO1b7NfiUo48spN3ykOULLhynH0Hw9RoUw3h" autocomplete="off">
+            <div class="mb-4">
+                <label class="block font-medium text-xl text-gray-700 dark:text-gray-300 !m-0" for="name"> First Name </label>
+                <input id="first-name" class="firstname"
+                       type="text" name="firstname"  required="required" autofocus="autofocus" autocomplete="first-name"
+                       data-validate='{"required":true}'>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium text-xl text-gray-700 dark:text-gray-300 !m-0" for="name"> Last Name </label>
+                <input id="last-name" class="lastname"
+                       type="text" name="lastname"  required="required" autofocus="autofocus" autocomplete="last-name"
+                       data-validate='{"required":true}'>
+            </div>
+
+            <div class="mb-4">
+                <label> Email </label>
+                <input id="email" class="email"
+                       type="email" name="email"  required="required" autofocus="autofocus" autocomplete="email"
+                       data-validate='{"required":true, }'>
+            </div>
+
+            <div class="mb-4">
+                <label> Phone </label>
+                <input id="phone_number" class="phone"
+                       type="tel" name="phone" required="required" autofocus="autofocus" autocomplete="phone"
+                       data-validate='{"required":true, "email": true}'>
+            </div>
+
+            <div><br>
+                <span>
+                  <button type="submit"> Update </button>
+                </span>
+                <span class="mt-3 flex w-full shadow-sm sm:mt-0 sm:w-auto">
+                  <button type="button" id="referral-update-cancel"> Cancel </button>
+                </span>
+            </div>
+        </form>
+        <br><br>
+    </div>
+
+
+    <button type="submit" id="referral-create-button" value="Create Referral">New Referral</button>
+    <br><br><br>
+    <h2>Referrals</h2>
+    <table class="data table referrals-table" id="referrals-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($block->getData('referrals_data') as $referral): ?>
+            <tr>
+                <td><?= $referral['id'] ?></td>
+                <td><?= $referral['firstname'] ?></td>
+                <td><?= $referral['lastname'] ?></td>
+                <td><?= $referral['email'] ?></td>
+                <td><?= $referral['phone'] ?></td>
+                <td><?= $referral['status'] ?></td>
+                <td>
+                    <span class="action-icons">
+                            <a href="#" class="edit-icon" title="Edit" data-id="<?= $referral['id'] ?>">
+                                Edit
+                            </a>
+                            <span class="separator">|</span>
+                            <a href="#" class="delete-icon" title="Delete" data-id="<?= $referral['id'] ?>">
+                                Delete
+                            </a>
+                        </span>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        require(['jquery'], function ($) {
+            $(document).ready(function () {
+                var baseUrl = window.location.protocol + '//' + window.location.host;
+                $('#referral-create-button').on('click', function () {
+                    $('.referrals-container-create').show();
+                    $('.referrals-container-update').hide();
+                });
+
+                $('#referral-create-cancel').on('click', function () {
+                    $('.referrals-container-create').hide();
+                });
+
+                $('#referral-update-cancel').on('click', function () {
+                    $('.referrals-container-update').hide();
+                });
+
+
+                $('.delete-icon').on('click', function (event) {
+                    event.preventDefault();
+                    var referralId = $(this).data('id');
+                    var deleteUrl = baseUrl + '/referrals/customer/delete/id/' + referralId;
+                    window.location.href = deleteUrl;
+                });
+
+                $('.edit-icon').on('click', function (event) {
+                    $('.referrals-container-update').show();
+                    $('.referrals-container-create').hide();
+
+                    event.preventDefault();
+
+                    var row = $(this).closest('tr');
+
+                    var firstname = row.find('td:eq(1)').text();
+                    var lastname = row.find('td:eq(2)').text();
+                    var email = row.find('td:eq(3)').text();
+                    var phone = row.find('td:eq(4)').text();
+                    var status = row.find('td:eq(5)').text();
+
+                    $('#form-referral-update .firstname').val(firstname);
+                    $('#form-referral-update .lastname').val(lastname);
+                    $('#form-referral-update .phone').val(phone);
+                    $('#form-referral-update .email').val(email);
+                    $('#form-referral-update .status').val(status);
+
+                });
+
+            });
+        });
+    </script>
+</div>
