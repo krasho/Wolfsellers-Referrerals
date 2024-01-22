@@ -20,7 +20,7 @@ interface ReferralInterface
      * @param int $id
      * @return bool true on success
      */
-    public function getDelete($id);
+    public function remove($id);
 
     /**
      * @param int $id

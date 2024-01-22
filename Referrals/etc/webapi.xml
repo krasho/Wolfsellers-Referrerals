@@ -13,8 +13,8 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route method="GET" url="/V1/custom/delete/">
-        <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="getDelete"/>
+    <route method="DELETE" url="/V1/referral/delete">
+        <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="remove"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
