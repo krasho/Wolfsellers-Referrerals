@@ -25,8 +25,8 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route method="PUT" url="/V1/referral/edit/">
-        <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="edit"/>
+    <route method="PUT" url="/V1/referral/update/">
+        <service class="Wolfsellers\Referrals\Api\ReferralInterface" method="update"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>

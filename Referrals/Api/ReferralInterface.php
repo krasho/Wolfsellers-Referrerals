@@ -29,7 +29,8 @@ interface ReferralInterface
 
     /**
      * GET for Post api
+     * @param int $id
      * @return string
      */
-    public function edit($id);
+    public function update($id);
 }

@@ -20,12 +20,12 @@ class Referrals extends Template
      * Constructor
      *
      * @param \Magento\Framework\View\Element\Template\Context  $context
-     * @param \Kaat\Referral\Model\ResourceModel\Referral\CollectionFactory
+     * @param \Wolfsellers\Referrals\Model\ResourceModel\Referrals\CollectionFactory
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Kaat\Referral\Model\ResourceModel\Referral\CollectionFactory $collectionFactory,
+        \Wolfsellers\Referrals\Model\ResourceModel\Referrals\CollectionFactory $collectionFactory,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -35,7 +35,7 @@ class Referrals extends Template
     /**
      * Retrieve referral collection
      *
-     * @return \Kaat\Referral\CustomModule\Model\ResourceModel\Referral\Collection
+     * @return \Wolfsellers\Referrals\CustomModule\Model\ResourceModel\Referral\Collection
      */
     public function getReferralCollection()
     {

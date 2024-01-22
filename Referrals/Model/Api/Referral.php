@@ -40,7 +40,7 @@ class Referral implements ReferralInterface
         return $response;
     }
 
-    public function edit($id)
+    public function update($id)
     {
         $data = $this->request->getBodyParams();
         $factory = $this->referralFactory->create()->load($id);
@@ -57,6 +57,7 @@ class Referral implements ReferralInterface
         } catch (\Exception $e) {
             $response = ['success' => false, 'message' => $e->getMessage()];
         }
+
         return $response;
     }
 
